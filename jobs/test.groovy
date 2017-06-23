@@ -3,9 +3,13 @@ job('Test run'){
     github('jobs/test2.groovy', 'master')
   }
   triggers {
-  	cron('@hourly')
+  	scm('H/15 * * * *')
   }
   steps {
     shell('echo "Hello World!"')
+  }
+  publishers {
+      archiveJunit('/*.xml')
+      downstream("${name}-itest", 'SUCCESS')
   }
 }
