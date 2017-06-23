@@ -1,6 +1,6 @@
 job('Test run'){
   scm {
-    github('jobs/2.groovy', 'master')
+    github('jobs/test2.groovy', 'master')
   }
   triggers {
   	cron('@hourly')
