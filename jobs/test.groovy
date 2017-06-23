@@ -1,5 +1,4 @@
-job{
-  name 'Test run'
+job('Test run'){
   triggers {
   	scm('*/15 * * * *')
   }
