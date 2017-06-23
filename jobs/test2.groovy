@@ -3,12 +3,11 @@ pipelineJob('Pipejob') {
   	cps {
   		sandbox()
   		script("""
-  			node {
-  				stage('init') {
-  					build 'Pipeline-build'
-
-  				}
-  			}
+          node {
+              stage ('1-st stage'){
+                  build "DSL-Tutorial-1-Test"
+              }
+          }
   	    """.stripIndent())
   		}
   	}
