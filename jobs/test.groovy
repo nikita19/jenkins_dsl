@@ -1,6 +1,9 @@
 job('Test run'){
+  scm {
+    github('jobs/2.groovy', 'master')
+  }
   triggers {
-  	scm('*/15 * * * *')
+  	cron('@hourly')
   }
   steps {
     shell('echo "Hello World!"')
