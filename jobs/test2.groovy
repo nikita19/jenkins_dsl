@@ -4,8 +4,16 @@ pipelineJob('Pipejob') {
   		sandbox()
   		script("""
           node {
-              stage ('1-st stage'){
-                  build "DSL-Tutorial-1-Test"
+          	  try {
+                stage ('1-st stage'){
+                    build "DSL-Tutorial-1-Test"
+                }
+                stage ('2-nd stage'){
+                	echo "build was finished"
+                }
+              } catch (e) {
+              	currentBuild.result = 'FAILED'
+                throw e
               }
           }
   	    """.stripIndent())
