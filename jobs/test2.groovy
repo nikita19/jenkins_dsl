@@ -7,10 +7,10 @@ pipelineJob('Pipejob') {
   		script("""
           node {
           	  try {
-                stage ('\u001B[31m1-st stage'){
+                stage ('1-st stage'){
                     build "DSL-Tutorial-1-Test"
                 }
-                stage ('\u001B[0m2-nd stage'){
+                stage ('2-nd stage'){
                     echo "build was finished"                  
                 }
               } catch (e) {
@@ -21,5 +21,4 @@ pipelineJob('Pipejob') {
   	    """.stripIndent())
   		}
   	}
-  wrappers { colorizeOutput() }
 }
