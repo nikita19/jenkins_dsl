@@ -1,12 +1,6 @@
 pipelineJob('Pipejob') {
   displayName('Pipeline job')
   description('Creates pipeline job using Jenkins DSL.')
-  properties {
-    githubProjectUrl('https://github.com/nikita19/jenkins_dsl.git')
-  }
-  triggers {
-    githubPush()
-  }
   definition {
   	cps {
   		sandbox()
