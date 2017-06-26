@@ -9,7 +9,7 @@ job('Test run'){
     shell('echo "Hello World!"')
   }
   publishers {
-      archiveJunit('/*.xml')
-      downstream("${name}-itest", 'SUCCESS')
+      // archiveJunit('/target/surefire-reports/*.xml')
+      downstream("Hello World", 'SUCCESS')
   }
 }
