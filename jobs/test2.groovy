@@ -19,6 +19,6 @@ pipelineJob('Pipejob') {
               }
           }
   	    """.stripIndent())
-  		}
   	}
+  }
 }
