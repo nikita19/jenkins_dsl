@@ -22,3 +22,16 @@ pipelineJob('Pipejob') {
   	}
   }
 }
+
+listView('admin'){
+    jobs {
+        name('Hello World')
+        name('Hello World2')
+        name('Hello World3')
+        name('Hello World7')
+    }
+    columns{
+        name()
+        status()
+    }
+}
