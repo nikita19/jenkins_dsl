@@ -8,8 +8,5 @@ job('Test run'){
   steps {
     shell('echo "Hello World!"')
   }
-  publishers {
-      // archiveJunit('/target/surefire-reports/*.xml')
-      downstream("Hello World", 'SUCCESS')
-  }
+
 }
