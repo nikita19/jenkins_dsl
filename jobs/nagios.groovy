@@ -1,7 +1,7 @@
 pipelineJob('Nagios_job') {
   displayName('Set nagios downtime')
   description('Set nagios downtime using Jenkins DSL.')
-  passwordParameterDefinition {name('Credentials to nagios server') defaultValue(nagios) description('Nagios credentials')}
+  passwordParameterDefinition {name('Credentials to nagios server') defaultValue('nagios') description('Nagios credentials')}
   parameters {
             stringParam('HOST', 'localhost', 'HOST description')
             stringParam('SERVICES', 'PING,HTTP', 'SERVICES description')
