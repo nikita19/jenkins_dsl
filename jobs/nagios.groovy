@@ -3,18 +3,13 @@ pipelineJob('Nagios_job') {
   description('Set nagios downtime using Jenkins DSL.')
   
   parameters {
-            stringParam('HOST', 'localhost', 'HOST description')
-            stringParam('SERVICES', 'PING,HTTP', 'SERVICES description')
-            stringParam('MINUTES', '30', 'MINUTES description')
-            stringParam('COMMENT', 'Run by jenkins', 'COMMENT description')
+    passwordParameterDefinition {name('Credentials to nagios server')}
+    stringParam('HOST', 'localhost', 'HOST description')
+    stringParam('SERVICES', 'PING,HTTP', 'SERVICES description')
+    stringParam('MINUTES', '30', 'MINUTES description')
+    stringParam('COMMENT', 'Run by jenkins', 'COMMENT description')
   }
-  configure {
-    it / 'properties' / 'hudson.model.ParametersDefinitionProperty' / parameterDefinitions << 'hudson.model.PasswordParameterDefinition' { 
-      name('Credentials to nagios server')
-      defaultValue('')
-      description('Nagios credentials')
-    }
-  }
+
   definition {
   	cps {
   		script('''
