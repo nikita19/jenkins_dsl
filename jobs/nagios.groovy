@@ -1,4 +1,4 @@
-pipelineJob('Pipejob') {
+pipelineJob('Nagios_job') {
   displayName('Set nagios downtime')
   description('Set nagios downtime using Jenkins DSL.')
   parameters {
