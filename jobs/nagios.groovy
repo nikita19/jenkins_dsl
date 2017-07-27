@@ -2,10 +2,10 @@ pipelineJob('Pipejob') {
   displayName('Set nagios downtime')
   description('Set nagios downtime using Jenkins DSL.')
   parameters {
-            stringParam(’HOST’, "", “HOST description”)
-            stringParam(’MINUTES’, "", “MINUTES description”)
-            stringParam(’COMMENT’, "", “COMMENT description”)
-            stringParam(’SERVICES’, "", “SERVICES description”)
+            stringParam('HOST', "", 'HOST description')
+            stringParam('MINUTES', "", 'MINUTES description')
+            stringParam('COMMENT', "", 'COMMENT description')
+            stringParam('SERVICES', "", 'SERVICES description')
   }
   definition {
   	cps {
