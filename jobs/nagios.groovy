@@ -1,11 +1,13 @@
 pipelineJob('Nagios_job') {
   displayName('Set nagios downtime')
   description('Set nagios downtime using Jenkins DSL.')
-  
   parameters {
-    passwordParameterDefinition {name('Credentials to nagios server')
-                                defaultValue(null) 
-                                description('Nagios credentials')}
+    credentialsParam('Credentials to nagios server') {
+            type('com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl')
+            required()
+            defaultValue('nagios')
+            description('SSH Key for deploying build artifacts')
+        }
     stringParam('HOST', 'localhost', 'HOST description')
     stringParam('SERVICES', 'PING,HTTP', 'SERVICES description')
     stringParam('MINUTES', '30', 'MINUTES description')
