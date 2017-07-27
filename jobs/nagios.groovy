@@ -34,7 +34,7 @@ pipelineJob('Nagios_job') {
                         println "Scheduling downtime on nagios for services"
                     }
                     sh """#!/usr/bin/env bash
-                    function die { echo \$1;  exit 1; }
+                    function die { echo \\$1;  exit 1; }
                     STARTDATE=`date "+%d-%m-%Y+%H%%3A%M%%3A%S"`
                     ENDDATE=`date "+%d-%m-%Y+%H%%3A%M%%3A%S" -d "$MINUTES min"`
         
@@ -45,8 +45,8 @@ pipelineJob('Nagios_job') {
                         --data service="${splitService[i]}" \
                         --data com_data="$COMMENT" \
                         --data trigger=0 \
-                        --data start_time="\$STARTDATE" \
-                        --data end_time="\$ENDDATE" \
+                        --data start_time="\\$STARTDATE" \
+                        --data end_time="\\$ENDDATE" \
                         --data fixed=1 \
                         --data hours=2 \
                         --data minutes=0 \
