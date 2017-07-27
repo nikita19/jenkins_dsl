@@ -16,6 +16,7 @@ pipelineJob('Nagios_job') {
 
   definition {
   	cps {
+      sandbox()
   		script('''
           node {
             NAGIP="10.128.46.200"
