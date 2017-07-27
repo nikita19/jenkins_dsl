@@ -37,23 +37,7 @@ pipelineJob('Nagios_job') {
                     function die { echo \\$1;  exit 1; }
                     STARTDATE=`date "+%d-%m-%Y+%H%%3A%M%%3A%S"`
                     ENDDATE=`date "+%d-%m-%Y+%H%%3A%M%%3A%S" -d "$MINUTES min"`
-        
-                    curl --silent --show-error \
-                        --data cmd_typ=${cmd_type} \
-                        --data cmd_mod=2 \
-                        --data host=${HOST} \
-                        --data service="${splitService[i]}" \
-                        --data com_data="$COMMENT" \
-                        --data trigger=0 \
-                        --data start_time="\\$STARTDATE" \
-                        --data end_time="\\$ENDDATE" \
-                        --data fixed=1 \
-                        --data hours=2 \
-                        --data minutes=0 \
-                        --data childoptions=0 \
-                        --data btnSubmit=Commit \
-                        --insecure \
-                        https://${NAGIP}/nagios/cgi-bin/cmd.cgi -u "${USER}:${PASS}" | grep -q "Your command request was successfully submitted to Nagios for processing." ||         die "Failed to contact nagios";
+                    curl --silent --show-error --data cmd_typ=${cmd_type} --data cmd_mod=2 --data host=${HOST} --data service="${splitService[i]}"  --data com_data="$COMMENT" --data trigger=0  --data start_time="\$STARTDATE" --data end_time="\$ENDDATE" --data fixed=1 --data hours=2 --data minutes=0 --data childoptions=0 --data btnSubmit=Commit --insecure https://${NAGIP}/nagios/cgi-bin/cmd.cgi -u "${USER}:${PASS}" | grep -q "Your command request was successfully submitted to Nagios for processing." || die "Failed to contact nagios";
                     echo Scheduled downtime on nagios
                     """
                     }
