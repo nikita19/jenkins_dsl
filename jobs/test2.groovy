@@ -8,7 +8,7 @@ pipelineJob('Pipejob') {
           node {
           	  try {
                 stage ('1-st stage'){
-                    build "DSL-Tutorial-1-Test"
+                    build "Hello World2"
                 }
                 stage ('2-nd stage'){
                     echo "build was finished"                  
