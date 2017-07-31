@@ -14,6 +14,7 @@ pipelineJob("delete downtimes(dsl)") {
         }
     stringParam('HOST', 'localhost', 'HOST description')
     stringParam('SERVICES', 'PING,HTTP', 'SERVICES description')
+    stringParam('AUTHOR','Nagios Admin', 'author for downtime')
     }
     definition {
         logRotator {
