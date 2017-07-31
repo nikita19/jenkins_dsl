@@ -20,17 +20,24 @@ node {
                 println dataparam
             }
                 sh """#!/usr/bin/env bash
-downtimelist=\$(curl --silent -k -u "${USER}:${PASS}"  https://${NAGIP}/nagios/cgi-bin/statusjson.cgi -d "${dataparam}" | python -c 'import json,sys;data=json.load(sys.stdin);print data["data"]["downtimelist"]')
+link=https://${NAGIP}/nagios/cgi-bin
+downtimelist=\$(curl --silent -k -u "${USER}:${PASS}" \$link/statusjson.cgi -d "${dataparam}" | python -c 'import json,sys;data=json.load(sys.stdin);print data["data"]["downtimelist"]')
 echo "\$downtimelist"
+set -x
 filteredList=`echo \$downtimelist | tr -d '[,]'`
-for id in \$filteredList; do curl --silent --show-error  --data cmd_typ=${cmd_type} --data cmd_mod=2 --data down_id=\$id  --data "com_data=Updating+application" --data btnSubmit=Commit --insecure https://10.128.46.200/nagios/cgi-bin/cmd.cgi -u "nagiosadmin:1q2w3e"; done
+export filteredList
+echo "filteredList: \$filteredList"
+author=\$(curl --silent -k -u "${USER}:${PASS}" \$link/statusjson.cgi -d "${dataparam}+&details=true" | python -c 'import json,sys,os;data=json.load(sys.stdin);print data["data"]["downtimelist"][os.environ["filteredList"]]["author"]')
+echo "\$author"
+if [ "\$author" == "${AUTHOR}" ]; then 
+    curl --silent --show-error  --data cmd_typ=${cmd_type} --data cmd_mod=2 --data down_id=\$filteredList  --data "com_data=Updating+application" --data btnSubmit=Commit --insecure \$link/cmd.cgi -u "${USER}:${PASS}"
+fi
+
 echo "DONE"
-                """   
+                """
 
             } //creds
             
         } // stage
     }     // for
-}         // node
-
-
+}         // node  export filteredList=
