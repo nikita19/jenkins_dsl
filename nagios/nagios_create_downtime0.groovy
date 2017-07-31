@@ -13,7 +13,7 @@ pipelineJob("create downtimes(dsl)") {
         }
         cps {
             sandbox()
-            script(readFileFromWorkspace('jenkins-jobs/nagios_create_downtime.groovy'))
+            script(readFileFromWorkspace('nagios/nagios_create_downtime.groovy'))
         }
     }
 }
