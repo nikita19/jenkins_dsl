@@ -20,11 +20,18 @@ node {
                 println dataparam
             }
                 sh """#!/usr/bin/env bash
-downtimelist=\$(curl --silent -k -u "${USER}:${PASS}"  https://${NAGIP}/nagios/cgi-bin/statusjson.cgi -d "${dataparam}" | python -c 'import json,sys;data=json.load(sys.stdin);print data["data"]["downtimelist"]')
-echo "\$downtimelist"
-filteredList=`echo \$downtimelist | tr -d '[,]'`
-for id in \$filteredList; do curl --silent --show-error  --data cmd_typ=${cmd_type} --data cmd_mod=2 --data down_id=\$id  --data "com_data=Updating+application" --data btnSubmit=Commit --insecure https://10.128.46.200/nagios/cgi-bin/cmd.cgi -u "nagiosadmin:1q2w3e"; done
-echo "DONE"
+author=\$(curl --silent -k -u "nagiosadmin:1q2w3e" https://10.128.46.200/nagios/cgi-bin/statusjson.cgi/ -d "query=downtimelist&details=true&hostname=localhost&servicedescription=HTTP&downtimeobjecttypes=service" | python -c 'import json,sys;data=json.load(sys.stdin);print data["data"]["downtimelist"]["122"]["author"]')
+echo "\$author"
+if [ "\$author" == "${AUTHOR}" ]; then 
+	downtimelist=\$(curl --silent -k -u "${USER}:${PASS}"  https://${NAGIP}/nagios/cgi-bin/statusjson.cgi -d "${dataparam}" | python -c 'import json,sys;data=json.load(sys.stdin);print data["data"]["downtimelist"]')
+	echo "\$downtimelist"
+	filteredList=`echo \$downtimelist | tr -d '[,]'`
+	for id in \$filteredList; do curl --silent --show-error  --data cmd_typ=${cmd_type} --data cmd_mod=2 --data down_id=\$id  --data "com_data=Updating+application" --data btnSubmit=Commit --insecure https://10.128.46.200/nagios/cgi-bin/cmd.cgi -u "nagiosadmin:1q2w3e"; done
+	echo "DONE"
+else
+	echo "Wrong author or no such service"
+	exit 1
+fi
                 """   
 
             } //creds
@@ -32,5 +39,3 @@ echo "DONE"
         } // stage
     }     // for
 }         // node
-
-
