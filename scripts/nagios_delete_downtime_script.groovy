@@ -25,14 +25,16 @@ downtimelist=\$(curl --silent -k -u "${USER}:${PASS}" \$link/statusjson.cgi -d "
 echo "\$downtimelist"
 set -x
 filteredList=`echo \$downtimelist | tr -d '[,]'`
-export filteredList
 echo "filteredList: \$filteredList"
-author=\$(curl --silent -k -u "${USER}:${PASS}" \$link/statusjson.cgi -d "${dataparam}+&details=true" | python -c 'import json,sys,os;data=json.load(sys.stdin);print data["data"]["downtimelist"][os.environ["filteredList"]]["author"]')
-echo "\$author"
-if [ "\$author" == "${AUTHOR}" ]; then 
-    curl --silent --show-error  --data cmd_typ=${cmd_type} --data cmd_mod=2 --data down_id=\$filteredList  --data "com_data=Updating+application" --data btnSubmit=Commit --insecure \$link/cmd.cgi -u "${USER}:${PASS}"
-fi
-
+for id in \$filteredList
+    do
+    export id
+    author=\$(curl --silent -k -u "${USER}:${PASS}" \$link/statusjson.cgi -d "${dataparam}+&details=true" | python -c 'import json,sys,os;data=json.load(sys.stdin);print data["data"]["downtimelist"][os.environ["id"]]["author"]')
+    echo "\$author"
+    if [ "\$author" == "${AUTHOR}" ]; then 
+        curl --silent --show-error  --data cmd_typ=${cmd_type} --data cmd_mod=2 --data down_id=\$id  --data "com_data=Updating+application" --data btnSubmit=Commit --insecure \$link/cmd.cgi -u "${USER}:${PASS}"
+    fi
+done
 echo "DONE"
                 """
 
